@@ -22,7 +22,8 @@ class NFCUser(models.Model):
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
 
-class Event(models.Model):
+# CMIS timetable model
+class CMISEvent(models.Model):
     # FKs
     org_id = models.CharField(max_length=20)
     event_id = models.CharField(max_length=20)
@@ -33,6 +34,10 @@ class Event(models.Model):
     subject = models.CharField(max_length=20)
     start_time = models.CharField(max_length=20)
     finish_time = models.CharField(max_length=20)
+
+    # a collection of dates such as:
+    # {14-09-2015, 21-09-2015, 28-09-2015, 05-10-2015, 12-10-2015, 19-10-2015}
+    active_dates = models.CharField(max_length=400)
 
     site = models.CharField(max_length=20)
     date_from = models.CharField(max_length=20)
