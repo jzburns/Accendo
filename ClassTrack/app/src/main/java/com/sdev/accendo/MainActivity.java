@@ -50,9 +50,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button b = (Button) findViewById(R.id.button);
+        b.setVisibility(View.INVISIBLE);
+        b = (Button) findViewById(R.id.button2);
+        b.setVisibility(View.INVISIBLE);
+
+
         /*
          * callback for the decrement
-         */
         Button but = (Button) findViewById(R.id.button_dec);
         but.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,9 +68,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
-         * callback for the increment
-         */
         but = (Button) findViewById(R.id.button_inc);
         but.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,10 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 text.setText(String.valueOf(mCount));
             }
         });
-
-        mCount = 0;
-        TextView text = (TextView) findViewById(R.id.textView2);
-        text.setText(String.valueOf(mCount));
+         */
 
         this.setupNFC();
     }
@@ -134,8 +133,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         mCount++;
-        TextView text = (TextView) findViewById(R.id.textView2);
-        text.setText(String.valueOf(mCount));
+        TextView text = (TextView) findViewById(R.id.textView5);
+        text.setText(String.format("%03d", mCount));
 
         /*
         extract the tag data
@@ -147,6 +146,14 @@ public class MainActivity extends AppCompatActivity {
                 msgs[i] = (NdefMessage) rawMsgs[i];
             }
         }
+
+        Button b = (Button) findViewById(R.id.button);
+        b.setVisibility(View.VISIBLE);
+        b = (Button) findViewById(R.id.button2);
+        b.setVisibility(View.VISIBLE);
+
+        //Intent i = new Intent(this, StartNewSession.class);
+        //startActivity(i);
     }
 
     @Override
