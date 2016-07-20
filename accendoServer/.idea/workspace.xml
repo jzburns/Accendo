@@ -2,34 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2272067c-5f77-4dfe-8ee6-c662337aedc4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../mysite/.idea/jsLinters/jscs.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/.idea/inspectionProfiles/profiles_settings.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/.idea/mysite.iml" afterPath="$PROJECT_DIR$/.idea/mysite.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/__init__.py" afterPath="$PROJECT_DIR$/accendoServer/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/admin.py" afterPath="$PROJECT_DIR$/accendo/admin.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/apps.py" afterPath="$PROJECT_DIR$/accendo/apps.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/accendo/migrations/0001_initial.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/migrations/0002_users_another_id.py" afterPath="$PROJECT_DIR$/accendo/migrations/0002_users_another_id.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/migrations/0003_remove_users_another_id.py" afterPath="$PROJECT_DIR$/accendo/migrations/0003_remove_users_another_id.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/migrations/0004_auto_20160719_1952.py" afterPath="$PROJECT_DIR$/accendo/migrations/0004_auto_20160719_1952.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/migrations/0005_auto_20160719_1955.py" afterPath="$PROJECT_DIR$/accendo/migrations/0005_auto_20160719_1955.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/migrations/0006_auto_20160719_2001.py" afterPath="$PROJECT_DIR$/accendo/migrations/0006_auto_20160719_2001.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/migrations/0007_event.py" afterPath="$PROJECT_DIR$/accendo/migrations/0007_event.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/migrations/__init__.py" afterPath="$PROJECT_DIR$/accendo/migrations/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/models.py" afterPath="$PROJECT_DIR$/accendo/models.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/tests.py" afterPath="$PROJECT_DIR$/accendo/tests.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/urls.py" afterPath="$PROJECT_DIR$/accendo/urls.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/accendo/views.py" afterPath="$PROJECT_DIR$/accendo/views.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/manage.py" afterPath="$PROJECT_DIR$/manage.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/mysite/__init__.py" afterPath="$PROJECT_DIR$/accendo/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/mysite/settings.py" afterPath="$PROJECT_DIR$/accendoServer/settings.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/mysite/urls.py" afterPath="$PROJECT_DIR$/accendoServer/urls.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../mysite/mysite/wsgi.py" afterPath="$PROJECT_DIR$/accendoServer/wsgi.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="mysite.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,7 +40,7 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/accendo/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
+            <state relative-caret-position="200">
               <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
@@ -143,10 +116,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="277" />
-    <option name="y" value="170" />
-    <option name="width" value="1570" />
-    <option name="height" value="985" />
+    <option name="x" value="163" />
+    <option name="y" value="84" />
+    <option name="width" value="1726" />
+    <option name="height" value="1101" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -527,10 +500,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="277" y="170" width="1570" height="985" extended-state="1" />
+    <frame x="163" y="84" width="1726" height="1101" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22292994" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20278099" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295063" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -538,7 +511,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3295063" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29078013" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -967,7 +940,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/accendo/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
+        <state relative-caret-position="200">
           <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
