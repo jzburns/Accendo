@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Accendo</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_start_new_session">StartNewSession</string>
+</resources>
