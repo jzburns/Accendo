@@ -28,21 +28,20 @@ class CMISEvent(models.Model):
     org_id = models.CharField(max_length=20)
     event_id = models.CharField(max_length=20)
     teacher_id = models.CharField(max_length=20)
-    # atributes
-    room = models.CharField(max_length=20)
-    day = models.CharField(max_length=20)
-    subject = models.CharField(max_length=20)
-    start_time = models.CharField(max_length=20)
-    finish_time = models.CharField(max_length=20)
 
-    # a collection of dates such as:
-    # {14-09-2015, 21-09-2015, 28-09-2015, 05-10-2015, 12-10-2015, 19-10-2015}
-    active_dates = models.CharField(max_length=400)
+    # CMIS atributes
+    Instance = models.CharField(max_length=50, default='NULL')
+    EventID = models.CharField(max_length=50, default='NULL')
+    Day = models.CharField(max_length=50, default='NULL')
+    Start = models.CharField(max_length=50, default='NULL')
+    Finish = models.CharField(max_length=50, default='NULL')
+    Room = models.CharField(max_length=100, default='NULL')
+    Dates = models.CharField(max_length=450, default='NULL')
+    SubjectCode = models.CharField(max_length=100, default='NULL')
+    SubjectName = models.CharField(max_length=100, default='NULL')
+    ActivityType = models.CharField(max_length=50, default='NULL')
+    SubjectSubGroup = models.CharField(max_length=50, default='NULL')
+    Source = models.CharField(max_length=50, default='NULL')
+    EventType = models.CharField(max_length=50, default='NULL')
 
-    site = models.CharField(max_length=20)
-    date_from = models.CharField(max_length=20)
-    date_to = models.CharField(max_length=20)
-    subject = models.CharField(max_length=20)
-    course = models.CharField(max_length=20)
-    department = models.CharField(max_length=20)
 
