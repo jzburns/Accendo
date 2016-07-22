@@ -2,7 +2,7 @@
 
 cd ttdir
 
-for f in *.small 
+for f in * 
 do
   # remove tabs
   sed 's/^	//' $f > $f.1
@@ -25,6 +25,8 @@ do
   sed 's/,$//g' $f.6 > $f.7
   sed 's/^,//g' $f.7 > $f.8
 
-  rm *.0 *.1 *.2 *.3 *.4 *.5 *.6 *.7
+  sed 's/^/'$f',/g' $f.8 > $f.9
+
+  rm *.1 *.2 *.3 *.4 *.5 *.6 *.7 *.8
 
 done
