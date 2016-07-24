@@ -5,7 +5,9 @@ from rest_framework.parsers import JSONParser
 from accendo.models import CMISEvent
 from accendo.models import NFCUser
 from accendo.serializers import CMISEventSerializer
+from accendo.serializers import NFCUserSerializer
 from django.views.decorators.csrf import csrf_exempt
+from uuid import uuid4
 
 def index(request):
    return HttpResponse("Welcome to Accendo")
@@ -48,12 +50,19 @@ def CMISEventDetail(request, pk):
         event.delete()
         return HttpResponse(status=204)
 
-# TODO:
-# Fix this...
+@csrf_exempt
+def NFCUserLogin(request, card_id):
+    try:
+        nfcuser = NFCUser.objects.get(card_id=card_id)
+    except NFCUser.DoesNotExist:
+        return HttpResponse(status=404)
+
+    # return the session key
+    if request.method == 'GET':
+        sessionid = str(uuid4())
+        request.session['sessionid'] = sessionid
+        return JSONResponse({'sessionid':sessionid})
 
 @csrf_exempt
-def NFCUserLogin(request, id):
-    if request.method == 'GET':
-        NFCUser = NFCUserLogin.objects.get(card_id=id)
-        serializer = NFCUserLoginSerializer(events, many=True)
-        return JSONResponse(serializer.data)
+def SyncSession(request, card_id):
+    return HttpResponse(status=404)

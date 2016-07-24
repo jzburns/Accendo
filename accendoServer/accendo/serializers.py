@@ -8,5 +8,5 @@ class CMISEventSerializer(serializers.Serializer):
     Finish = serializers.CharField(max_length=50, default='NULL')
     Room = serializers.CharField(max_length=100, default='NULL')
 
-class NFCUserLoginSerializer(serializers.Serializer):
+class NFCUserSerializer(serializers.Serializer):
     user_id = serializers.CharField(max_length=20)
