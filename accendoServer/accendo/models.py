@@ -8,10 +8,11 @@ from django.utils import timezone
 
 
 class NFCUser(models.Model):
-    org_id = models.CharField(max_length=20)
-    card_id = models.CharField(max_length=20)
-    user_id = models.CharField(max_length=20)
-    role = models.CharField(max_length=20)
+    org_id = models.CharField(max_length=20, default='NULL')
+    card_id = models.CharField(max_length=20, default='NULL')
+    user_id = models.CharField(max_length=20, default='NULL')
+    role = models.CharField(max_length=20, default='NULL')
+    pin = models.CharField(max_length=200, default='NULL')
     date_added = models.DateTimeField('date added')
 
     def __str__(self):
