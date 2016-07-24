@@ -12,7 +12,7 @@ class NFCUser(models.Model):
     card_id = models.CharField(max_length=20, default='NULL')
     user_id = models.CharField(max_length=20, default='NULL')
     role = models.CharField(max_length=20, default='NULL')
-    pin = models.CharField(max_length=200, default='NULL')
+    pin = models.CharField(max_length=200, default='0000')
     date_added = models.DateTimeField('date added')
 
     def __str__(self):

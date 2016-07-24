@@ -50,11 +50,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+/**
         Button b = (Button) findViewById(R.id.button);
         b.setVisibility(View.INVISIBLE);
         b = (Button) findViewById(R.id.button2);
         b.setVisibility(View.INVISIBLE);
-
+***/
 
         /*
          * callback for the decrement
@@ -132,13 +133,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+/***
         mCount++;
         TextView text = (TextView) findViewById(R.id.textView5);
         text.setText(String.format("%03d", mCount));
 
-        /*
-        extract the tag data
-         */
+ ***/
         Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
         if (rawMsgs != null) {
            NdefMessage[] msgs = new NdefMessage[rawMsgs.length];
@@ -146,14 +146,15 @@ public class MainActivity extends AppCompatActivity {
                 msgs[i] = (NdefMessage) rawMsgs[i];
             }
         }
-
+/***
         Button b = (Button) findViewById(R.id.button);
         b.setVisibility(View.VISIBLE);
         b = (Button) findViewById(R.id.button2);
         b.setVisibility(View.VISIBLE);
-
-        //Intent i = new Intent(this, StartNewSession.class);
-        //startActivity(i);
+***/
+        Intent i = new Intent(this, EnterPin.class);
+        startActivity(i);
+        //debugMsg("New intent received");
     }
 
     @Override

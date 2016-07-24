@@ -61,7 +61,7 @@ def NFCUserLogin(request, card_id):
     if request.method == 'GET':
         sessionid = str(uuid4())
         request.session['sessionid'] = sessionid
-        return JSONResponse({'sessionid':sessionid})
+        return JSONResponse({'sessionid': sessionid})
 
 @csrf_exempt
 def SyncSession(request, card_id):

@@ -32,6 +32,8 @@
                 android:label="@string/title_activity_start_new_session"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".EnterPin">
+        </activity>
     </application>
 
 </manifest>
