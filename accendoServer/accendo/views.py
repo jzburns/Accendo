@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from accendo.models import CMISEvent
+from accendo.models import NFCUser
 from accendo.serializers import CMISEventSerializer
 from django.views.decorators.csrf import csrf_exempt
 
@@ -46,3 +47,13 @@ def CMISEventDetail(request, pk):
     elif request.method == 'DELETE':
         event.delete()
         return HttpResponse(status=204)
+
+# TODO:
+# Fix this...
+
+@csrf_exempt
+def NFCUserLogin(request, id):
+    if request.method == 'GET':
+        NFCUser = NFCUserLogin.objects.get(card_id=id)
+        serializer = NFCUserLoginSerializer(events, many=True)
+        return JSONResponse(serializer.data)
