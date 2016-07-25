@@ -51,9 +51,9 @@ def CMISEventDetail(request, pk):
         return HttpResponse(status=204)
 
 @csrf_exempt
-def NFCUserLogin(request, card_id):
+def AccendoValidateUser(request, card_id, pin):
     try:
-        nfcuser = NFCUser.objects.get(card_id=card_id)
+        nfcuser = NFCUser.objects.get(card_id=card_id, pin=pin)
     except NFCUser.DoesNotExist:
         return HttpResponse(status=404)
 

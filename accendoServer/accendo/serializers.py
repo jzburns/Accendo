@@ -10,3 +10,4 @@ class CMISEventSerializer(serializers.Serializer):
 
 class NFCUserSerializer(serializers.Serializer):
     user_id = serializers.CharField(max_length=20)
+    
