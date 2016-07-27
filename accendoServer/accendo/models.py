@@ -13,6 +13,8 @@ class NFCUser(models.Model):
     user_id = models.CharField(max_length=20, default='NULL')
     role = models.CharField(max_length=20, default='NULL')
     pin = models.CharField(max_length=200, default='0000')
+    wrong_pin_count = models.IntegerField(default=0)
+    status = models.CharField(max_length=200, default='OK')
     date_added = models.DateTimeField('date added')
 
     def __str__(self):

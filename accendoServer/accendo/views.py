@@ -53,15 +53,27 @@ def CMISEventDetail(request, pk):
 @csrf_exempt
 def AccendoValidateUser(request, card_id, pin):
     try:
-        nfcuser = NFCUser.objects.get(card_id=card_id, pin=pin)
+        nfcuser = NFCUser.objects.get(card_id=card_id)
     except NFCUser.DoesNotExist:
         return HttpResponse(status=200)
 
-    # return the session key
-    if request.method == 'GET':
-        sessionid = str(uuid4())
-        request.session['sessionid'] = sessionid
-        return JSONResponse({'sessionid': sessionid})
+    if nfcuser.status == 'LOCKED':
+        return HttpResponse(status=300)
+
+    if nfcuser.pin != pin:
+        nfcuser.wrong_pin_count += 1
+        nfcuser.save();
+        if nfcuser.wrong_pin_count == 3:
+            nfcuser.status = 'LOCKED'
+            nfcuser.save();
+        return HttpResponse(status=300)
+    else:
+        nfcuser.wrong_pin_count = 0
+        nfcuser.save();
+        if request.method == 'GET':
+            sessionid = str(uuid4())
+            request.session['sessionid'] = sessionid
+            return JSONResponse({'sessionid': sessionid})
 
 @csrf_exempt
 def SyncSession(request, card_id):

@@ -1,8 +1,10 @@
 package com.sdev.accendo;
 
+import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.tech.NfcA;
@@ -13,6 +15,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -41,6 +44,31 @@ public class StartNewSession extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+         this.setupNFC();
+    }
+
+
+    private void setupNFC() {
+        mAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        TextView text = (TextView) findViewById(R.id.message_log);
+
+        /*
+         * refactor this
+         */
+        if(mAdapter == null){
+            text.setText("No NFC Adapter Found");
+        }
+        else {
+            text.setText("NFC Adapter Found");
+            int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.NFC);
+            if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                text.setText("Permission Granted");
+            } else {
+                text.setText("Permission NOT Granted");
+            }
+        }
+
         mPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT /*|
                         Intent.FLAG_ACTIVITY_SINGLE_TOP*/), PendingIntent.FLAG_UPDATE_CURRENT);
@@ -66,6 +94,7 @@ public class StartNewSession extends AppCompatActivity {
                 NfcA.class.getName(),
                 NfcB.class.getName()
         } };
+
     }
 
     @Override
@@ -74,6 +103,7 @@ public class StartNewSession extends AppCompatActivity {
         mCount++;
         TextView text = (TextView) findViewById(R.id.textView5);
         text.setText(String.format("%03d", mCount));
+        this.debugMsg("New intent received");
 
         /*
         extract the tag data
@@ -85,9 +115,27 @@ public class StartNewSession extends AppCompatActivity {
                 msgs[i] = (NdefMessage) rawMsgs[i];
             }
         }
+    }
 
-        Intent i = new Intent(this, EnterPin.class);
-        startActivity(i);
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mAdapter != null)
+            mAdapter.disableForegroundDispatch(this);
+    }
+
+    private void debugMsg(String str) {
+        TextView text = (TextView) findViewById(R.id.message_log);
+        text.setText(str);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mAdapter != null)
+            mAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters, mTechLists);
     }
 
 }

@@ -3,6 +3,7 @@ package com.sdev.accendo;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
@@ -38,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /*
+         * when the phone is placed on a flat surface sometimes
+         * it goes into landscape
+         */
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -152,8 +161,10 @@ public class MainActivity extends AppCompatActivity {
         b = (Button) findViewById(R.id.button2);
         b.setVisibility(View.VISIBLE);
 ***/
+        mPendingIntent.cancel();
         Intent i = new Intent(this, EnterPin.class);
         startActivity(i);
+
         //debugMsg("New intent received");
     }
 

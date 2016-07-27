@@ -2,6 +2,7 @@ package com.sdev.accendo;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,21 +15,30 @@ import android.widget.TextView;
 
 public class EnterPin extends AppCompatActivity {
 
+    private Boolean done;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_pin);
-        //editText.requestFocusFromTouch();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-    //EditText editText = (EditText) findViewById(R.id.editText);
-    EditText editText = (EditText) findViewById(R.id.editText);
+        TextView txt = (TextView) findViewById(R.id.textView3);
+        txt.setText("On CREATE called");
+
+        EditText editText = (EditText) findViewById(R.id.editText);
+        editText.requestFocusFromTouch();
+
         editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             boolean handled = false;
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                new LongOperation().execute("");            }
+                TextView txt = (TextView) findViewById(R.id.textView3);
+                txt.setText("Starting");
+                  new LongOperation().execute("");
+            }
             return handled;
         }
     });
@@ -38,9 +48,12 @@ public class EnterPin extends AppCompatActivity {
         private ProgressDialog dialog = new ProgressDialog(EnterPin.this);
         @Override
         protected String doInBackground(String... params) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 2; i++) {
                 try {
                     Thread.sleep(1000);
+                    /*
+                     * Volley JSON request here
+                     */
                 } catch (InterruptedException e) {
                     Thread.interrupted();
                 }
@@ -52,10 +65,14 @@ public class EnterPin extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
            TextView txt = (TextView) findViewById(R.id.textView3);
-           txt.setText("Executed");
+           txt.setText("Finished Executed ");
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
+            done = Boolean.TRUE;
+            Intent intent_name = new Intent();
+            intent_name.setClass(getApplicationContext(),StartNewSession.class);
+            startActivity(intent_name);
         }
 
         @Override
@@ -67,14 +84,6 @@ public class EnterPin extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {}
     }
-
-/**
-    @Override
-
-    Intent i = new Intent(this, StartNewSession.class);
-    startActivity(i);
-**/
-
 
     @Override
    public void onResume() {
