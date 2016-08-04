@@ -1,17 +1,17 @@
 package com.sdev.accendo;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.android.volley.*;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 
 public class EnterPin extends AppCompatActivity {
 
@@ -35,54 +35,42 @@ public class EnterPin extends AppCompatActivity {
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             boolean handled = false;
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                TextView txt = (TextView) findViewById(R.id.textView3);
-                txt.setText("Starting");
-                  new LongOperation().execute("");
+                validateUser();
             }
             return handled;
         }
     });
     }
 
-    private class LongOperation extends AsyncTask<String, Void, String> {
-        private ProgressDialog dialog = new ProgressDialog(EnterPin.this);
-        @Override
-        protected String doInBackground(String... params) {
-            for (int i = 0; i < 2; i++) {
-                try {
-                    Thread.sleep(1000);
-                    /*
-                     * Volley JSON request here
-                     */
-                } catch (InterruptedException e) {
-                    Thread.interrupted();
-                }
-                publishProgress();
+    private void debugMsg(String str) {
+        TextView text = (TextView) findViewById(R.id.textView3);
+        text.setText(str);
+    }
+
+    protected void validateUser () {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://192.168.1.15:8000/accendo/validateuser/0f2afe/0000/";
+
+        this.debugMsg("Validating user");
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        debugMsg("RESPONSE: " + response.substring(0,50));
+                        //Intent intent_name = new Intent();
+                        //intent_name.setClass(getApplicationContext(),StartNewSession.class);
+                        //startActivity(intent_name);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                debugMsg("ERROR: " + error.toString());
             }
-            return "Executed";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-           TextView txt = (TextView) findViewById(R.id.textView3);
-           txt.setText("Finished Executed ");
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
-            done = Boolean.TRUE;
-            Intent intent_name = new Intent();
-            intent_name.setClass(getApplicationContext(),StartNewSession.class);
-            startActivity(intent_name);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            this.dialog.setMessage("Please wait");
-            this.dialog.show();
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {}
+        });
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
     }
 
     @Override

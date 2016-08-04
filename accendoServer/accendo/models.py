@@ -5,7 +5,7 @@ from django.db import models
 # the following lines added:
 import datetime
 from django.utils import timezone
-
+from django.utils.timezone import now
 
 class NFCUser(models.Model):
     org_id = models.CharField(max_length=20, default='NULL')
@@ -29,7 +29,6 @@ class NFCUser(models.Model):
 class CMISEvent(models.Model):
     # FKs
     org_id = models.CharField(max_length=20)
-    event_id = models.CharField(max_length=20)
     teacher_id = models.CharField(max_length=20)
 
     # CMIS atributes
@@ -47,6 +46,13 @@ class CMISEvent(models.Model):
     Source = models.CharField(max_length=50, default='NULL')
     EventType = models.CharField(max_length=50, default='NULL')
 
-
     def __str__(self):
         return '%s\t%s\t%s\t%s\t%s' % (self.teacher_id, self.Day, self.Start, self.Finish, self.SubjectName)
+
+class AttendEvent(models.Model):
+    # FKs
+    # event ID
+    event = models.ForeignKey(CMISEvent)
+    # student ID
+    student = models.ForeignKey(NFCUser)
+    date_attended = models.DateTimeField(default=datetime.datetime.now)

@@ -19,7 +19,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class StartNewSession extends AppCompatActivity {
@@ -52,22 +51,6 @@ public class StartNewSession extends AppCompatActivity {
         mAdapter = NfcAdapter.getDefaultAdapter(this);
 
         TextView text = (TextView) findViewById(R.id.message_log);
-
-        /*
-         * refactor this
-         */
-        if(mAdapter == null){
-            text.setText("No NFC Adapter Found");
-        }
-        else {
-            text.setText("NFC Adapter Found");
-            int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.NFC);
-            if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                text.setText("Permission Granted");
-            } else {
-                text.setText("Permission NOT Granted");
-            }
-        }
 
         mPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT /*|

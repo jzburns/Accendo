@@ -51,9 +51,9 @@ def CMISEventDetail(request, pk):
         return HttpResponse(status=204)
 
 @csrf_exempt
-def AccendoValidateUser(request, card_id, pin):
+def AccendoValidateUser(request, cardid, pin):
     try:
-        nfcuser = NFCUser.objects.get(card_id=card_id)
+        nfcuser = NFCUser.objects.get(card_id=cardid)
     except NFCUser.DoesNotExist:
         return HttpResponse(status=200)
 
@@ -76,5 +76,11 @@ def AccendoValidateUser(request, card_id, pin):
             return JSONResponse({'sessionid': sessionid})
 
 @csrf_exempt
-def SyncSession(request, card_id):
+def InitSession(request, sessionid):
+    if sessionid == request.session['sessionid']:
+        return JSONResponse({'accepted': sessionid})
+    return HttpResponse(status=404)
+
+@csrf_exempt
+def SyncSession(request, cardid):
     return HttpResponse(status=404)
