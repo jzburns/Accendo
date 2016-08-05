@@ -5,7 +5,6 @@ from django.db import models
 # the following lines added:
 import datetime
 from django.utils import timezone
-from django.utils.timezone import now
 
 class NFCUser(models.Model):
     org_id = models.CharField(max_length=20, default='NULL')

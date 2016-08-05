@@ -1,4 +1,5 @@
 # Create your views here.from django.http import HttpResponse
+import datetime
 from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
@@ -73,14 +74,27 @@ def AccendoValidateUser(request, cardid, pin):
         if request.method == 'GET':
             sessionid = str(uuid4())
             request.session['sessionid'] = sessionid
+            request.session['user_id'] = nfcuser.user_id
             return JSONResponse({'sessionid': sessionid})
 
 @csrf_exempt
 def InitSession(request, sessionid):
     if sessionid == request.session['sessionid']:
-        return JSONResponse({'accepted': sessionid})
-    return HttpResponse(status=404)
+        user_id = request.session['user_id']
+        try:
+            # Dates formatting 19-02-2016
+            # Start formatting 09:00 and 15:00
+            today = datetime.datetime.today().strftime('%d-%m-%Y')
+            thishour = datetime.datetime.now().hour
+            cmisevent = CMISEvent.objects.filter(teacher_id=user_id, Dates__contains=today, Start=thishour)
+        except CMISEvent.DoesNotExist:
+            return JSONResponse({'no record found': sessionid})
+        return JSONResponse({'time': thishour, 'day': today, 'user_id': user_id})
+    return JSONResponse({'no record found': sessionid})
+
 
 @csrf_exempt
-def SyncSession(request, cardid):
+def SyncSession(request, sessionid):
+    if sessionid == request.session['sessionid']:
+        return JSONResponse({'syncd': sessionid})
     return HttpResponse(status=404)
