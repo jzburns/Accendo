@@ -18,6 +18,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +27,11 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.content.IntentFilter.MalformedMimeTypeException;
 
+import java.util.Iterator;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity {
+    private static final String LOG_TAG = "NFC DEBUG";
     private NfcAdapter mAdapter;
     private PendingIntent mPendingIntent;
     private IntentFilter[] mFilters;
@@ -58,36 +63,6 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-/**
-        Button b = (Button) findViewById(R.id.button);
-        b.setVisibility(View.INVISIBLE);
-        b = (Button) findViewById(R.id.button2);
-        b.setVisibility(View.INVISIBLE);
-***/
-
-        /*
-         * callback for the decrement
-        Button but = (Button) findViewById(R.id.button_dec);
-        but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCount += (mCount > 0) ? -1 : 0;
-                TextView text = (TextView) findViewById(R.id.textView2);
-                text.setText(String.valueOf(mCount));
-            }
-        });
-
-        but = (Button) findViewById(R.id.button_inc);
-        but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCount++;
-                TextView text = (TextView) findViewById(R.id.textView2);
-                text.setText(String.valueOf(mCount));
-            }
-        });
-         */
 
         this.setupNFC();
     }
@@ -125,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 ndef,
         };
         mTechLists = new String[][] { new String[] { NfcF.class.getName() } };
-         IntentFilter td = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+        IntentFilter td = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         mFilters = new IntentFilter[] {
                 ndef, td
         };
@@ -135,37 +110,49 @@ public class MainActivity extends AppCompatActivity {
                 NfcF.class.getName(),
                 NfcA.class.getName(),
                 NfcB.class.getName()
-            } };
-
+        } };
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-/***
-        mCount++;
-        TextView text = (TextView) findViewById(R.id.textView5);
-        text.setText(String.format("%03d", mCount));
 
- ***/
-        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-        if (rawMsgs != null) {
-           NdefMessage[] msgs = new NdefMessage[rawMsgs.length];
-            for (int i = 0; i < rawMsgs.length; i++) {
-                msgs[i] = (NdefMessage) rawMsgs[i];
+        String msg = "";
+
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                debugMsg("has extras");
+                 Set<String> keys = bundle.keySet();
+                 Iterator<String> it = keys.iterator();
+                 while (it.hasNext()) {
+                     String key = it.next();
+                     msg += "[" + key + "=" + bundle.get(key)+"]";
+                 }
+            } else {
+                debugMsg("bundle is null");
             }
-        }
-/***
-        Button b = (Button) findViewById(R.id.button);
-        b.setVisibility(View.VISIBLE);
-        b = (Button) findViewById(R.id.button2);
-        b.setVisibility(View.VISIBLE);
-***/
-        mPendingIntent.cancel();
-        Intent i = new Intent(this, EnterPin.class);
-        startActivity(i);
 
-        //debugMsg("New intent received");
+            String hexdump = new String();
+            byte[] tagId = (byte[]) bundle.get("android.nfc.extra.ID");
+            for (int i = 0; i < tagId.length; i++) {
+                String x = Integer.toHexString(((int) tagId[i] & 0xff));
+                if (x.length() == 1) {
+                    x = '0' + x;
+                }
+                hexdump += x + ' ';
+            }
+
+            debugMsg("Found ID: " + hexdump);
+
+            mPendingIntent.cancel();
+            Bundle b = new Bundle();
+            b.putString("cardid", hexdump);
+            intent.putExtras(b);
+            Intent i = new Intent(this, EnterPin.class);
+            startActivity(i);
+            finish();
+        }
     }
 
     @Override

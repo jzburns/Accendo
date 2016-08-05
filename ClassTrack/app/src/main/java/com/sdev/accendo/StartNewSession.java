@@ -21,6 +21,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Iterator;
+import java.util.Set;
+
 public class StartNewSession extends AppCompatActivity {
     private NfcAdapter mAdapter;
     private PendingIntent mPendingIntent;
@@ -83,21 +86,37 @@ public class StartNewSession extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mCount++;
-        TextView text = (TextView) findViewById(R.id.textView5);
-        text.setText(String.format("%03d", mCount));
-        this.debugMsg("New intent received");
 
-        /*
-        extract the tag data
-         */
-        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-        if (rawMsgs != null) {
-            NdefMessage[] msgs = new NdefMessage[rawMsgs.length];
-            for (int i = 0; i < rawMsgs.length; i++) {
-                msgs[i] = (NdefMessage) rawMsgs[i];
+        String msg = "";
+
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                debugMsg("has extras");
+                Set<String> keys = bundle.keySet();
+                Iterator<String> it = keys.iterator();
+                while (it.hasNext()) {
+                    String key = it.next();
+                    msg += "[" + key + "=" + bundle.get(key)+"]";
+                }
+            } else {
+                debugMsg("bundle is null");
             }
+
+            String hexdump = new String();
+            byte[] tagId = (byte[]) bundle.get("android.nfc.extra.ID");
+            for (int i = 0; i < tagId.length; i++) {
+                String x = Integer.toHexString(((int) tagId[i] & 0xff));
+                if (x.length() == 1) {
+                    x = '0' + x;
+                }
+                hexdump += x + ' ';
+            }
+
+            debugMsg("Found ID: " + hexdump);
+
         }
+
     }
 
     @Override

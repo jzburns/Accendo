@@ -12,10 +12,9 @@ import com.android.volley.*;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-
 public class EnterPin extends AppCompatActivity {
 
-    private Boolean done;
+    private String cardid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public class EnterPin extends AppCompatActivity {
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             boolean handled = false;
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                validateUser();
+                validateUser((String)v.getText());
             }
             return handled;
         }
@@ -47,9 +46,15 @@ public class EnterPin extends AppCompatActivity {
         text.setText(str);
     }
 
-    protected void validateUser () {
+    protected void validateUser (String pin) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://192.168.1.15:8000/accendo/validateuser/0f2afe/0000/";
+
+        String cardid = getIntent().getExtras().getString("cardid");
+
+        /*
+         * validate the user
+         */
+        String url ="http://192.168.1.15:8000/accendo/validateuser/" + cardid + "/" + pin;
 
         this.debugMsg("Validating user");
 
