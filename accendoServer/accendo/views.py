@@ -81,15 +81,16 @@ def AccendoValidateUser(request, cardid, pin):
 def InitSession(request, sessionid):
     if sessionid == request.session['sessionid']:
         user_id = request.session['user_id']
-        try:
-            # Dates formatting 19-02-2016
-            # Start formatting 09:00 and 15:00
-            today = datetime.datetime.today().strftime('%d-%m-%Y')
-            thishour = datetime.datetime.now().hour
-            cmisevent = CMISEvent.objects.filter(teacher_id=user_id, Dates__contains=today, Start=thishour)
-        except CMISEvent.DoesNotExist:
-            return JSONResponse({'no record found': sessionid})
-        return JSONResponse({'time': thishour, 'day': today, 'user_id': user_id})
+        todaysdate = datetime.datetime.today().strftime('%d-%m-%Y')
+        thishour = datetime.datetime.now().time().strftime("%H:00")
+        # test with
+        todaysdate = '13-11-2015'
+        thishour = '11:00'
+        cmisevents = CMISEvent.objects.filter(teacher_id=user_id, Dates__contains=todaysdate, Start=thishour)
+        if not cmisevents:
+            return JSONResponse({'no session at this time': sessionid})
+        cmisevent = cmisevents[0]
+        return JSONResponse({'time': thishour, 'day': todaysdate, 'event_id': cmisevent.__str__()})
     return JSONResponse({'no record found': sessionid})
 
 

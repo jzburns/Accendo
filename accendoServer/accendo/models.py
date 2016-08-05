@@ -46,7 +46,7 @@ class CMISEvent(models.Model):
     EventType = models.CharField(max_length=50, default='NULL')
 
     def __str__(self):
-        return '%s\t%s\t%s\t%s\t%s' % (self.teacher_id, self.Day, self.Start, self.Finish, self.SubjectName)
+        return '%s %s %s %s %s %s' % (self.teacher_id, self.Room, self.Day, self.Start, self.Finish, self.SubjectName)
 
 class AttendEvent(models.Model):
     # FKs
