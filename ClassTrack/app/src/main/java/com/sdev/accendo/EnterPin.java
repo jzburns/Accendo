@@ -50,6 +50,7 @@ public class EnterPin extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         String cardid = getIntent().getExtras().getString("cardid");
+        cardid = cardid.replace(" ", "");
 
         /*
          * validate the user

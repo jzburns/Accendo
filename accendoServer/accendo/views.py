@@ -97,7 +97,7 @@ def InitSession(request, sessionid):
             return JSONResponse({'no session at this time': sessionid})
         cmisevent = cmisevents[0]
         request.session['eventid'] = cmisevent.EventID
-        return JSONResponse({'time': thishour, 'day': todaysdate, 'event_id': cmisevent.__str__()})
+        return JSONResponse({'fullevent': cmisevent.__str__()})
     return JSONResponse({'no record found': sessionid})
 
 

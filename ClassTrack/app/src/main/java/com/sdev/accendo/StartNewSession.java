@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
@@ -20,6 +21,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import org.json.JSONObject;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -31,10 +39,14 @@ public class StartNewSession extends AppCompatActivity {
     private String[][] mTechLists;
     private TextView mText;
     private String mSessionid;
+    private String mFullevent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         setContentView(R.layout.activity_start_new_session);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,9 +65,51 @@ public class StartNewSession extends AppCompatActivity {
          */
 
         mSessionid = getIntent().getExtras().getString("sessionid");
+        //mFullevent = getIntent().getExtras().getString("fullevent");
+
+        this.debugMsg(mSessionid);
+
         this.setupNFC();
+
+        this.initSession();
     }
 
+    protected void initSession () {
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String sessionid = getIntent().getExtras().getString("sessionid");
+
+        /*
+         * start a new session
+         */
+        String url ="http://192.168.1.15:8000/accendo/initsession/" + sessionid;
+
+        this.debugMsg("Init Sessions: " + sessionid);
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String fullevent = response.getString("fullevent");
+                            if (fullevent != null) {
+                                sessionData(fullevent);
+                            } else {
+                                String errormsg = response.getString("error");
+                                debugMsg("ERROR: " + errormsg);
+                            }
+                        } catch (org.json.JSONException e) {
+                            debugMsg(e.getLocalizedMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+        // Add the request to the RequestQueue.
+        queue.add(jsObjRequest);
+    }
 
     private void setupNFC() {
         mAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -138,6 +192,11 @@ public class StartNewSession extends AppCompatActivity {
 
     private void debugMsg(String str) {
         TextView text = (TextView) findViewById(R.id.message_log);
+        text.setText(str);
+    }
+
+    private void sessionData(String str) {
+        TextView text = (TextView) findViewById(R.id.textView4);
         text.setText(str);
     }
 
