@@ -53,13 +53,19 @@ def CMISEventDetail(request, pk):
 
 @csrf_exempt
 def AccendoValidateUser(request, cardid, pin):
+
+    #
+    # TODO:
+    # remove these precise error messages and replace with 303
+    #
+
     try:
         nfcuser = NFCUser.objects.get(card_id=cardid)
     except NFCUser.DoesNotExist:
-        return HttpResponse(status=200)
+        return JSONResponse({'error': 'no such user'})
 
     if nfcuser.status == 'LOCKED':
-        return HttpResponse(status=300)
+        return JSONResponse({'error': 'account locked'})
 
     if nfcuser.pin != pin:
         nfcuser.wrong_pin_count += 1
@@ -67,7 +73,7 @@ def AccendoValidateUser(request, cardid, pin):
         if nfcuser.wrong_pin_count == 3:
             nfcuser.status = 'LOCKED'
             nfcuser.save();
-        return HttpResponse(status=300)
+        return JSONResponse({'error': 'invalid pin'})
     else:
         nfcuser.wrong_pin_count = 0
         nfcuser.save();

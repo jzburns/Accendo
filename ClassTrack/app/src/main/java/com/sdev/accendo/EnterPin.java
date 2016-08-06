@@ -34,7 +34,7 @@ public class EnterPin extends AppCompatActivity {
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             boolean handled = false;
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                validateUser((String)v.getText());
+                validateUser(String.valueOf(v.getText()));
             }
             return handled;
         }
@@ -56,7 +56,7 @@ public class EnterPin extends AppCompatActivity {
          */
         String url ="http://192.168.1.15:8000/accendo/validateuser/" + cardid + "/" + pin;
 
-        this.debugMsg("Validating user");
+        this.debugMsg("Validating user: " + cardid + "PIN: " + pin);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -71,6 +71,9 @@ public class EnterPin extends AppCompatActivity {
                                 i.putExtras(b);
                                 startActivity(i);
                                 finish();
+                            } else {
+                                String errormsg = response.getString("error");
+                                debugMsg("ERROR: " + errormsg);
                             }
                         } catch (org.json.JSONException e) {
                             debugMsg(e.getLocalizedMessage());
