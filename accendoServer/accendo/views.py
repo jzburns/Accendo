@@ -3,7 +3,7 @@ import datetime
 from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from accendo.models import CMISEvent
+from accendo.models import CMISEvent, AttendEvent
 from accendo.models import NFCUser
 from accendo.serializers import CMISEventSerializer
 from accendo.serializers import NFCUserSerializer
@@ -87,8 +87,8 @@ def AccendoValidateUser(request, cardid, pin):
 def InitSession(request, sessionid):
     if sessionid == request.session['sessionid']:
         user_id = request.session['user_id']
-        todaysdate = datetime.datetime.today().strftime('%d-%m-%Y')
-        thishour = datetime.datetime.now().time().strftime("%H:00")
+        # todaysdate = datetime.datetime.today().strftime('%d-%m-%Y')
+        # thishour = datetime.datetime.now().time().strftime("%H:00")
         # test with
         todaysdate = '13-11-2015'
         thishour = '11:00'
@@ -96,6 +96,7 @@ def InitSession(request, sessionid):
         if not cmisevents:
             return JSONResponse({'no session at this time': sessionid})
         cmisevent = cmisevents[0]
+        request.session['eventid'] = cmisevent.EventID
         return JSONResponse({'time': thishour, 'day': todaysdate, 'event_id': cmisevent.__str__()})
     return JSONResponse({'no record found': sessionid})
 
@@ -105,3 +106,18 @@ def SyncSession(request, sessionid):
     if sessionid == request.session['sessionid']:
         return JSONResponse({'syncd': sessionid})
     return HttpResponse(status=404)
+
+@csrf_exempt
+def Attend(request, sessionid, cardid):
+    if sessionid == request.session['sessionid']:
+        # create a AttendEvent object and insert
+        # compute %age attendance and return
+        ev = CMISEvent.objects.get(EventID=request.session['eventid'])
+        card = NFCUser.objects.get(card_id=cardid)
+        attendevent = AttendEvent()
+        attendevent.student = card
+        attendevent.event = ev
+        attendevent.save()
+
+        return JSONResponse({'pcntage': '60'})
+    return JSONResponse({'no record found': sessionid})

@@ -55,3 +55,4 @@ class AttendEvent(models.Model):
     # student ID
     student = models.ForeignKey(NFCUser)
     date_attended = models.DateTimeField(default=datetime.datetime.now)
+
