@@ -9,12 +9,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.android.volley.*;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import org.json.JSONObject;
 
 public class EnterPin extends AppCompatActivity {
-
-    private String cardid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,24 +58,32 @@ public class EnterPin extends AppCompatActivity {
 
         this.debugMsg("Validating user");
 
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        debugMsg("RESPONSE: " + response.substring(0,50));
-                        //Intent intent_name = new Intent();
-                        //intent_name.setClass(getApplicationContext(),StartNewSession.class);
-                        //startActivity(intent_name);
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String sessionid = response.getString("sessionid");
+                            if (sessionid != null) {
+                                Bundle b = new Bundle();
+                                b.putString("sessionid", sessionid);
+                                Intent i = new Intent(EnterPin.this, StartNewSession.class);
+                                i.putExtras(b);
+                                startActivity(i);
+                                finish();
+                            }
+                        } catch (org.json.JSONException e) {
+                            debugMsg(e.getLocalizedMessage());
+                        }
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                debugMsg("ERROR: " + error.toString());
-            }
-        });
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+
         // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+        queue.add(jsObjRequest);
     }
 
     @Override

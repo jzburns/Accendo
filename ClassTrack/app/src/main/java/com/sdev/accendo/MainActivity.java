@@ -148,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
             mPendingIntent.cancel();
             Bundle b = new Bundle();
             b.putString("cardid", hexdump);
-            intent.putExtras(b);
             Intent i = new Intent(this, EnterPin.class);
+            i.putExtras(b);
             startActivity(i);
             finish();
         }

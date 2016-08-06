@@ -30,7 +30,8 @@ public class StartNewSession extends AppCompatActivity {
     private IntentFilter[] mFilters;
     private String[][] mTechLists;
     private TextView mText;
-    private int mCount = 0;
+    private String mSessionid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,13 @@ public class StartNewSession extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-         this.setupNFC();
+
+        /*
+         * we are in this activity so we have a valid sessionid
+         */
+
+        mSessionid = getIntent().getExtras().getString("sessionid");
+        this.setupNFC();
     }
 
 
@@ -113,8 +120,10 @@ public class StartNewSession extends AppCompatActivity {
                 hexdump += x + ' ';
             }
 
+            /*
+             * here we call sync session with each user card ID
+             */
             debugMsg("Found ID: " + hexdump);
-
         }
 
     }
