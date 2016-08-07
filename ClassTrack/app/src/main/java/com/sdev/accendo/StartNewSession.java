@@ -20,6 +20,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -91,15 +92,17 @@ public class StartNewSession extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            String fullevent = response.getString("fullevent");
-                            if (fullevent != null) {
-                                sessionData(fullevent);
-                            } else {
-                                String errormsg = response.getString("error");
-                                debugMsg("ERROR: " + errormsg);
-                            }
+                          String fullevent = response.getString("event");
+                          sessionData(fullevent);
                         } catch (org.json.JSONException e) {
-                            debugMsg(e.getLocalizedMessage());
+                            try {
+                                String errormsg = response.getString("ERROR");
+                                sessionData(errormsg);
+                                Button b = (Button) findViewById(R.id.button);
+                                b.setEnabled(false);
+                            } catch (org.json.JSONException excp) {
+                                sessionData(excp.getLocalizedMessage());
+                            }
                         }
                     }
                 }, new Response.ErrorListener() {

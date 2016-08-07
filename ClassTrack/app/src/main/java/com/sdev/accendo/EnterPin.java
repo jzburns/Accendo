@@ -9,10 +9,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.android.volley.*;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.*;
 import org.json.JSONObject;
+
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookieStore;
 
 public class EnterPin extends AppCompatActivity {
 
@@ -47,6 +49,10 @@ public class EnterPin extends AppCompatActivity {
     }
 
     protected void validateUser (String pin) {
+
+        CookieManager cookieManage = new CookieManager();
+        CookieHandler.setDefault(cookieManage);
+
         RequestQueue queue = Volley.newRequestQueue(this);
 
         String cardid = getIntent().getExtras().getString("cardid");
@@ -87,6 +93,7 @@ public class EnterPin extends AppCompatActivity {
                 });
 
         // Add the request to the RequestQueue.
+
         queue.add(jsObjRequest);
     }
 

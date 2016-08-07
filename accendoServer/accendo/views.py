@@ -85,20 +85,22 @@ def AccendoValidateUser(request, cardid, pin):
 
 @csrf_exempt
 def InitSession(request, sessionid):
-    if sessionid == request.session['sessionid']:
-        user_id = request.session['user_id']
-        # todaysdate = datetime.datetime.today().strftime('%d-%m-%Y')
-        # thishour = datetime.datetime.now().time().strftime("%H:00")
-        # test with
-        todaysdate = '13-11-2015'
-        thishour = '11:00'
-        cmisevents = CMISEvent.objects.filter(teacher_id=user_id, Dates__contains=todaysdate, Start=thishour)
-        if not cmisevents:
-            return JSONResponse({'no session at this time': sessionid})
-        cmisevent = cmisevents[0]
-        request.session['eventid'] = cmisevent.EventID
-        return JSONResponse({'fullevent': cmisevent.__str__()})
-    return JSONResponse({'no record found': sessionid})
+    if request.method == 'GET':
+        if sessionid == request.session['sessionid']:
+            user_id = request.session['user_id']
+            todaysdate = datetime.datetime.today().strftime('%d-%m-%Y')
+            thishour = datetime.datetime.now().time().strftime("%H:00")
+            # test with
+            # todaysdate = '13-11-2015'
+            # thishour = '11:00'
+            cmisevents = CMISEvent.objects.filter(teacher_id=user_id, Dates__contains=todaysdate, Start=thishour)
+            if not cmisevents:
+                return JSONResponse({'ERROR': "No event scheduled for you at this time"})
+            cmisevent = cmisevents[0]
+            request.session['eventid'] = cmisevent.EventID
+            return JSONResponse({'event': cmisevent.__str__()})
+        return JSONResponse({'ERROR': "Invalid Session"})
+    return JSONResponse({'NON GET': "999"})
 
 
 @csrf_exempt
