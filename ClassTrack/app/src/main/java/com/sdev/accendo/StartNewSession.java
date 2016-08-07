@@ -93,15 +93,15 @@ public class StartNewSession extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                           String fullevent = response.getString("event");
-                          sessionData(fullevent);
+                            eventData(fullevent);
                         } catch (org.json.JSONException e) {
                             try {
                                 String errormsg = response.getString("ERROR");
-                                sessionData(errormsg);
+                                eventData(errormsg);
                                 Button b = (Button) findViewById(R.id.button);
                                 b.setEnabled(false);
                             } catch (org.json.JSONException excp) {
-                                sessionData(excp.getLocalizedMessage());
+                                eventData(excp.getLocalizedMessage());
                             }
                         }
                     }
@@ -122,6 +122,7 @@ public class StartNewSession extends AppCompatActivity {
         mPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT /*|
                         Intent.FLAG_ACTIVITY_SINGLE_TOP*/), PendingIntent.FLAG_UPDATE_CURRENT);
+
         IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
 
         try {
@@ -144,13 +145,13 @@ public class StartNewSession extends AppCompatActivity {
                 NfcA.class.getName(),
                 NfcB.class.getName()
         } };
-
+        debugMsg("NFC setup complete");
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
+        debugMsg("New Intent");
         String msg = "";
 
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
@@ -181,8 +182,48 @@ public class StartNewSession extends AppCompatActivity {
              * here we call sync session with each user card ID
              */
             debugMsg("Found ID: " + hexdump);
+            this.attend(hexdump);
         }
+    }
 
+    protected void attend (String cardid) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String sessionid = getIntent().getExtras().getString("sessionid");
+
+        /*
+         * start a new session
+         */
+        cardid = cardid.replace(" ", "");
+        String url ="http://192.168.1.15:8000/accendo/attend/" + sessionid + "/" + cardid;
+
+        this.debugMsg("Init Sessions: " + sessionid);
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String pcntage = response.getString("pcntage");
+                            attendPct(pcntage);
+                        } catch (org.json.JSONException e) {
+                            try {
+                                String errormsg = response.getString("ERROR");
+                                eventData(errormsg);
+                                Button b = (Button) findViewById(R.id.button);
+                                b.setEnabled(false);
+                            } catch (org.json.JSONException excp) {
+                                eventData(excp.getLocalizedMessage());
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+        // Add the request to the RequestQueue.
+        queue.add(jsObjRequest);
     }
 
     @Override
@@ -198,8 +239,13 @@ public class StartNewSession extends AppCompatActivity {
         text.setText(str);
     }
 
-    private void sessionData(String str) {
-        TextView text = (TextView) findViewById(R.id.textView4);
+    private void eventData(String str) {
+        TextView text = (TextView) findViewById(R.id.eventdata);
+        text.setText(str);
+    }
+
+    private void attendPct(String str) {
+        TextView text = (TextView) findViewById(R.id.attendPct);
         text.setText(str);
     }
 

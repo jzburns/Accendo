@@ -88,11 +88,11 @@ def InitSession(request, sessionid):
     if request.method == 'GET':
         if sessionid == request.session['sessionid']:
             user_id = request.session['user_id']
-            todaysdate = datetime.datetime.today().strftime('%d-%m-%Y')
-            thishour = datetime.datetime.now().time().strftime("%H:00")
+            # todaysdate = datetime.datetime.today().strftime('%d-%m-%Y')
+            # thishour = datetime.datetime.now().time().strftime("%H:00")
             # test with
-            # todaysdate = '13-11-2015'
-            # thishour = '11:00'
+            todaysdate = '13-11-2015'
+            thishour = '11:00'
             cmisevents = CMISEvent.objects.filter(teacher_id=user_id, Dates__contains=todaysdate, Start=thishour)
             if not cmisevents:
                 return JSONResponse({'ERROR': "No event scheduled for you at this time"})

@@ -119,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
         String msg = "";
 
+        debugMsg("new intent....");
+
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
@@ -151,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(this, EnterPin.class);
             i.putExtras(b);
             startActivity(i);
-            finish();
+            //finish();
         }
     }
 
