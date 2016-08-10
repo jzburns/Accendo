@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from decimal import Decimal
 from django.db import models
 
 # the following lines added:
@@ -44,6 +45,10 @@ class CMISEvent(models.Model):
     SubjectSubGroup = models.CharField(max_length=50, default='NULL')
     Source = models.CharField(max_length=50, default='NULL')
     EventType = models.CharField(max_length=50, default='NULL')
+    # run this update to compute the TotalOccurrences
+    # update accendo_cmisevent ev1, accendo_cmisevent ev2 set ev1.TotalOccurrences =
+    # (select LENGTH(ev1.Dates) - LENGTH(REPLACE(ev1.Dates, '|', '')) + 1) where ev1.id = ev2.id;
+    TotalOccurrences = models.IntegerField(default=0)
 
     def __str__(self):
         return '%s %s %s %s %s ' % (self.Room, self.Day, self.Start, self.Finish, self.SubjectName)
@@ -55,4 +60,10 @@ class AttendEvent(models.Model):
     # student ID
     student = models.ForeignKey(NFCUser)
     date_attended = models.DateTimeField(default=datetime.datetime.now)
+    Session = models.CharField(max_length=50, default='NULL')
 
+class Attendance(models.Model):
+    event = models.ForeignKey(CMISEvent)
+    student = models.ForeignKey(NFCUser)
+    AttendancePct = models.DecimalField(max_digits=6,decimal_places=2,default=Decimal('0.00'))
+    RunningTotal = models.IntegerField(default=0)

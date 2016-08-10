@@ -3,7 +3,7 @@ import datetime
 from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from accendo.models import CMISEvent, AttendEvent
+from accendo.models import CMISEvent, AttendEvent, Attendance
 from accendo.models import NFCUser
 from accendo.serializers import CMISEventSerializer
 from accendo.serializers import NFCUserSerializer
@@ -98,6 +98,7 @@ def InitSession(request, sessionid):
                 return JSONResponse({'ERROR': "No event scheduled for you at this time"})
             cmisevent = cmisevents[0]
             request.session['eventid'] = cmisevent.EventID
+            request.session['session_stamp'] = todaysdate + ' ' + thishour
             return JSONResponse({'event': cmisevent.__str__()})
         return JSONResponse({'ERROR': "Invalid Session"})
     return JSONResponse({'NON GET': "999"})
@@ -116,10 +117,43 @@ def Attend(request, sessionid, cardid):
         # compute %age attendance and return
         ev = CMISEvent.objects.get(EventID=request.session['eventid'])
         card = NFCUser.objects.get(card_id=cardid)
-        attendevent = AttendEvent()
-        attendevent.student = card
-        attendevent.event = ev
-        attendevent.save()
 
-        return JSONResponse({'pcntage': '60'})
-    return JSONResponse({'no record found': sessionid})
+        event_session = request.session['session_stamp']
+
+        try:
+            # already attended this session event?
+
+            # for test purposes
+            # attendevent = AttendEvent.objects.get(event=ev, student=card)
+            attendevent = AttendEvent.objects.get(Session=event_session)
+            return JSONResponse({'DUP': "0000"})
+
+        except AttendEvent.DoesNotExist:
+            attendevent = AttendEvent()
+
+        if attendevent:
+            attendevent.student = card
+            attendevent.event = ev
+            attendevent.Session = event_session
+            attendevent.save()
+
+            # compute attendance data
+
+            try:
+                # already attended this session event?
+                att = Attendance.objects.get()
+
+            except Attendance.DoesNotExist:
+                att = Attendance()
+
+            if att:
+                # compute the stats and save
+                att.RunningTotal += 1
+                att.AttendancePct = float(att.RunningTotal) / float(ev.TotalOccurrences) * 100.0
+                att.event = ev
+                att.student = card
+                att.save()
+                return JSONResponse({'pcntage': att.AttendancePct})
+
+            return JSONResponse({'NON GET': "999"})
+

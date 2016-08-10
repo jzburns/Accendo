@@ -29,10 +29,11 @@ for filename in glob.glob('ttdir/*.9'):
       ActivityType, \
       SubjectSubGroup, \
       Source, \
-      EventType) \
+      EventType, \
+      TotalOccurrences) \
       VALUES("ITTALLGHT", \
       %s, %s, %s, %s, %s, %s, %s,\
-      %s, %s, %s, %s, %s, %s, %s)', row)
+      %s, %s, %s, %s, %s, %s, %s, 0)', row)
 
 #close the connection to the database.
 cursor.close()
