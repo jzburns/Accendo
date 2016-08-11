@@ -163,18 +163,16 @@ def Attend(request, sessionid, cardid):
                 todaysdate = '13-11-2015'
                 # what week is this?
                 week = ev.Dates.index(todaysdate)
+                week = week / 11 + 1
 
-                print >> sys.stderr, 'Dates: ' + ev.Dates
-                print >> sys.stderr, 'Search for : ' + todaysdate
-                print >> sys.stderr, 'Index : '
-                print >> sys.stderr, week
+                # print >> sys.stderr, week
 
                 # compute the stats and save
                 att.AttendancePct = float(att.RunningTotal) / float(week) * 100.0
                 att.event = ev
                 att.student = card
                 att.save()
-                return JSONResponse({'pcntage': att.AttendancePct})
+                return JSONResponse({'pcntage': round(att.AttendancePct, 2)})
 
             return JSONResponse({'ERROR': "999"})
 

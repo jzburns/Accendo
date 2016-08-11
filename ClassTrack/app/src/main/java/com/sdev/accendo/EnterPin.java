@@ -30,15 +30,6 @@ public class EnterPin extends AppCompatActivity {
         txt.setText("On CREATE called");
 
         EditText editText = (EditText) findViewById(R.id.editText);
-        editText.requestFocusFromTouch();
-
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
-
-        /**
-        imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-         ***/
 
         editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -112,6 +103,10 @@ public class EnterPin extends AppCompatActivity {
         super.onResume();
          EditText editText = (EditText) findViewById(R.id.editText);
          editText.requestFocus();
+
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+
     }
 
 }

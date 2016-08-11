@@ -31,6 +31,11 @@ class CMISEvent(models.Model):
     org_id = models.CharField(max_length=20)
     teacher_id = models.CharField(max_length=20)
 
+    # after a data load
+    # UPDATE accendo_cmisevent SET Dates = REPLACE(Dates, '|', '');
+    # UPDATE accendo_cmisevent SET Dates = REPLACE(Dates, '{', '');
+    # UPDATE accendo_cmisevent SET Dates = REPLACE(Dates, '}', '');
+
     # CMIS atributes
     Instance = models.CharField(max_length=50, default='NULL')
     EventID = models.CharField(max_length=50, default='NULL')
