@@ -98,8 +98,6 @@ public class StartNewSession extends AppCompatActivity {
                             try {
                                 String errormsg = response.getString("ERROR");
                                 eventData(errormsg);
-                                Button b = (Button) findViewById(R.id.button);
-                                b.setEnabled(false);
                             } catch (org.json.JSONException excp) {
                                 eventData(excp.getLocalizedMessage());
                             }
@@ -209,9 +207,6 @@ public class StartNewSession extends AppCompatActivity {
                         } catch (org.json.JSONException e) {
                             try {
                                 String errormsg = response.getString("ERROR");
-                                eventData(errormsg);
-                                Button b = (Button) findViewById(R.id.button);
-                                b.setEnabled(false);
                             } catch (org.json.JSONException excp) {
                                 eventData(excp.getLocalizedMessage());
                             }
@@ -239,14 +234,15 @@ public class StartNewSession extends AppCompatActivity {
         text.setText(str);
     }
 
+
     private void eventData(String str) {
-        TextView text = (TextView) findViewById(R.id.eventdata);
-        text.setText(str);
+        //TextView text = (TextView) findViewById(R.id.eventdata);
+        //text.setText(str);
     }
 
     private void attendPct(String str) {
-        TextView text = (TextView) findViewById(R.id.attendPct);
-        text.setText(str);
+        //TextView text = (TextView) findViewById(R.id.attendPct);
+        //text.setText(str);
     }
 
     @Override

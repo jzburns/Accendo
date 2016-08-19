@@ -37,21 +37,6 @@
             tools:showIn="@layout/activity_start_new_session"
             tools:context="com.sdev.accendo.StartNewSession">
 
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Start New Session"
-                android:id="@+id/button"
-                android:layout_marginBottom="137dp" android:layout_above="@+id/message_log"
-                android:layout_centerHorizontal="true"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/eventdata"
-                android:text="You have no current event"
-                android:layout_below="@+id/textClock" android:layout_alignParentStart="true"
-                android:layout_marginTop="36dp"/>
         <TextClock
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,39 +50,31 @@
                 android:id="@+id/message_log"
                 android:layout_marginBottom="80dp" android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageViewSession" android:layout_below="@+id/textClock" android:layout_alignParentStart="true"
+                android:layout_marginTop="69dp"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Attendance"
-                android:id="@+id/textView2"
-                android:layout_below="@+id/eventdata" android:layout_alignParentStart="true"
-                android:layout_marginTop="46dp"/>
+                android:text="Session"
+                android:id="@+id/textViewSession" android:layout_alignBottom="@+id/imageViewSession"
+                android:layout_alignStart="@+id/textClock"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageStudent"
+                android:src="@drawable/student" android:layout_below="@+id/imageViewSession"
+        />
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="100%"
-                android:id="@+id/attendPct" android:layout_alignTop="@+id/textView2"
-                android:layout_alignStart="@+id/message_log"
-                android:layout_alignEnd="@+id/button"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Number"
-                android:id="@+id/textView5"
-                android:layout_below="@+id/textView2" android:layout_alignParentStart="true"
-                android:layout_marginTop="43dp"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="0"
-                android:id="@+id/count"
-                android:layout_alignTop="@+id/textView5" android:layout_toStartOf="@+id/textClock"
-                android:layout_alignEnd="@+id/textClock" android:width="20dp"/>
-
+                android:text="Student"
+                android:id="@+id/textViewStudent"
+                android:layout_alignBottom="@+id/imageStudent" android:layout_alignEnd="@+id/textViewSession"/>
     </RelativeLayout>
 
 

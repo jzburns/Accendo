@@ -84,7 +84,8 @@ def AccendoValidateUser(request, cardid, pin):
             request.session['sessionid'] = sessionid
             request.session['user_id'] = nfcuser.user_id
             request.session['user_role'] = nfcuser.role
-            return JSONResponse({'sessionid': sessionid})
+            # the client needs to know the role for functionality management
+            return JSONResponse({'sessionid': sessionid, 'role': nfcuser.role})
 
 @csrf_exempt
 def InitSession(request, sessionid):

@@ -75,7 +75,19 @@ public class EnterPin extends AppCompatActivity {
                             if (sessionid != null) {
                                 Bundle b = new Bundle();
                                 b.putString("sessionid", sessionid);
-                                Intent i = new Intent(EnterPin.this, StartNewSession.class);
+
+                                /*
+                                 * depending on the role:
+                                 */
+
+                                String role = response.getString("role");
+                                Intent i = null;
+
+                                if(role.equals("student")) {
+                                    i = new Intent(EnterPin.this, StudentActivity.class);
+                                } else {
+                                    i = new Intent(EnterPin.this, StartNewSession.class);
+                                }
                                 i.putExtras(b);
                                 startActivity(i);
                                 finish();
