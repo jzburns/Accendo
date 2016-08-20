@@ -11,6 +11,8 @@ class NFCUser(models.Model):
     org_id = models.CharField(max_length=20, default='NULL')
     card_id = models.CharField(max_length=20, default='NULL')
     user_id = models.CharField(max_length=20, default='NULL')
+    lname = models.CharField(max_length=20, default='NULL')
+    fname = models.CharField(max_length=20, default='NULL')
     role = models.CharField(max_length=20, default='NULL')
     pin = models.CharField(max_length=200, default='0000')
     wrong_pin_count = models.IntegerField(default=0)

@@ -173,7 +173,12 @@ def Attend(request, sessionid, cardid):
                 att.event = ev
                 att.student = card
                 att.save()
-                return JSONResponse({'pcntage': round(att.AttendancePct, 2)})
+
+                # return the student name etc for display
+                return JSONResponse({'pcntage': round(att.AttendancePct, 2),
+                                     'lname': card.lname,
+                                     'fname': card.fname,
+                                     'user_id': card.user_id})
 
             return JSONResponse({'ERROR': "999"})
 

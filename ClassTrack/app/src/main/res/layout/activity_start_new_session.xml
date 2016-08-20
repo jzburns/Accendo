@@ -60,21 +60,25 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Session"
-                android:id="@+id/textViewSession" android:layout_alignBottom="@+id/imageViewSession"
-                android:layout_alignStart="@+id/textClock"/>
+                android:id="@+id/textViewSession"
+                android:maxLength="100" android:maxLines="1"
+                android:minWidth="500dp" android:layout_alignTop="@+id/imageViewSession"
+                android:layout_alignEnd="@+id/textViewStudent" android:maxWidth="500dp"/>
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageStudent"
-                android:src="@drawable/student" android:layout_below="@+id/imageViewSession"
-        />
+                android:src="@drawable/student"
+                android:layout_below="@+id/imageViewSession" android:layout_toEndOf="@+id/imageViewSession"
+                android:layout_marginTop="90dp"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Student"
                 android:id="@+id/textViewStudent"
-                android:layout_alignBottom="@+id/imageStudent" android:layout_alignEnd="@+id/textViewSession"/>
+                android:minWidth="400dp"
+                android:layout_centerVertical="true" android:layout_alignParentStart="true"/>
     </RelativeLayout>
 
 

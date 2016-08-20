@@ -204,11 +204,14 @@ public class StartNewSession extends AppCompatActivity {
                         try {
                             String pcntage = response.getString("pcntage");
                             attendPct(pcntage);
+                            studentData(response.getString("fname") + " " +
+                                    response.getString("lname") + " " +
+                                    response.getString("user_id"));
                         } catch (org.json.JSONException e) {
                             try {
                                 String errormsg = response.getString("ERROR");
                             } catch (org.json.JSONException excp) {
-                                eventData(excp.getLocalizedMessage());
+                                messageLog(excp.getLocalizedMessage());
                             }
                         }
                     }
@@ -234,10 +237,19 @@ public class StartNewSession extends AppCompatActivity {
         text.setText(str);
     }
 
+    private void studentData(String str) {
+        TextView student = (TextView) findViewById(R.id.textViewStudent);
+        student.setText(str);
+    }
 
     private void eventData(String str) {
-        //TextView text = (TextView) findViewById(R.id.eventdata);
-        //text.setText(str);
+        TextView session = (TextView) findViewById(R.id.textViewSession);
+        session.setText(str);
+    }
+
+    private void messageLog(String str) {
+        TextView msg = (TextView) findViewById(R.id.message_log);
+        msg.setText(str);
     }
 
     private void attendPct(String str) {
