@@ -108,6 +108,9 @@ def InitSession(request, sessionid):
             cmisevent = cmisevents[0]
             request.session['eventid'] = cmisevent.EventID
             request.session['session_stamp'] = todaysdate + ' ' + thishour
+
+            # 50 minute sessions only
+            request.session.set_expiry(300)
             return JSONResponse({'event': cmisevent.__str__()})
 
         return JSONResponse({'ERROR': "Invalid Session"})
@@ -135,9 +138,16 @@ def Attend(request, sessionid, cardid):
             # already attended this session event?
 
             # for test purposes
-            attendevent = AttendEvent.objects.get(event=ev, student=card)
+            attendevent = AttendEvent.objects.get(event=ev, student=card, Session=event_session)
             # attendevent = AttendEvent.objects.get(Session=event_session)
-            return JSONResponse({'ERROR': "DUP"})
+
+            # so this is a duplicate attend
+            # just return the student name and pcnt
+            att = Attendance.objects.get(student=card.id, event=ev)
+            return JSONResponse({'pcntage': round(att.AttendancePct, 2),
+                                 'lname': card.lname,
+                                 'fname': card.fname,
+                                 'user_id': card.user_id})
 
         except AttendEvent.DoesNotExist:
             attendevent = AttendEvent()
@@ -152,7 +162,7 @@ def Attend(request, sessionid, cardid):
 
             try:
                 # already attended this session event?
-                att = Attendance.objects.get()
+                att = Attendance.objects.get(student=card.id, event=ev)
 
             except Attendance.DoesNotExist:
                 att = Attendance()
@@ -165,8 +175,6 @@ def Attend(request, sessionid, cardid):
                 # what week is this?
                 week = ev.Dates.index(todaysdate)
                 week = week / 11 + 1
-
-                # print >> sys.stderr, week
 
                 # compute the stats and save
                 att.AttendancePct = float(att.RunningTotal) / float(week) * 100.0

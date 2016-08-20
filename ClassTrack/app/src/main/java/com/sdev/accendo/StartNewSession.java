@@ -20,7 +20,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,6 +32,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -42,8 +45,13 @@ public class StartNewSession extends AppCompatActivity {
     private String mSessionid;
     private String mFullevent;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    ArrayList<String> listItems=new ArrayList<String>();
+    ArrayAdapter<String> adapter;
+
+    int clickCounter=0;
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -66,14 +74,15 @@ public class StartNewSession extends AppCompatActivity {
          */
 
         mSessionid = getIntent().getExtras().getString("sessionid");
-        //mFullevent = getIntent().getExtras().getString("fullevent");
 
         this.debugMsg(mSessionid);
-
         this.setupNFC();
-
         this.initSession();
-    }
+
+        adapter = new ArrayAdapter<String>(this,  android.R.layout.simple_list_item_1, listItems);
+        ListView students = (ListView) findViewById(R.id.listViewStudents);
+        students.setAdapter(adapter);
+        }
 
     protected void initSession () {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -238,8 +247,10 @@ public class StartNewSession extends AppCompatActivity {
     }
 
     private void studentData(String str) {
-        TextView student = (TextView) findViewById(R.id.textViewStudent);
-        student.setText(str);
+        if(!listItems.contains((str))) {
+            listItems.add(0, str);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void eventData(String str) {
