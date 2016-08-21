@@ -1,14 +1,11 @@
 # Create your views here.from django.http import HttpResponse
-import datetime
 
-import sys
 from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from accendo.models import CMISEvent, AttendEvent, Attendance
 from accendo.models import NFCUser
 from accendo.serializers import CMISEventSerializer
-from accendo.serializers import NFCUserSerializer
 from django.views.decorators.csrf import csrf_exempt
 from uuid import uuid4
 

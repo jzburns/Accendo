@@ -20,7 +20,7 @@ class NFCUser(models.Model):
     date_added = models.DateTimeField('date added')
 
     def __str__(self):
-        return self.org_id
+        return '%s %s %s %s %s %s' % (self.lname, self.fname, self.org_id, self.card_id, self.user_id, self.role)
 
     def was_added_recently(self):
         now = timezone.now()
@@ -37,6 +37,15 @@ class CMISEvent(models.Model):
     # UPDATE accendo_cmisevent SET Dates = REPLACE(Dates, '|', '');
     # UPDATE accendo_cmisevent SET Dates = REPLACE(Dates, '{', '');
     # UPDATE accendo_cmisevent SET Dates = REPLACE(Dates, '}', '');
+
+
+    # UPDATE accendo_cmisevent SET SubjectName = REPLACE(SubjectName, '|', '');
+    # UPDATE accendo_cmisevent SET SubjectName = REPLACE(SubjectName, '{', '');
+    # UPDATE accendo_cmisevent SET SubjectName = REPLACE(SubjectName, '}', '');
+
+    # UPDATE accendo_cmisevent SET Room = REPLACE(Room, '|', '');
+    # UPDATE accendo_cmisevent SET Room = REPLACE(Room, '{', '');
+    # UPDATE accendo_cmisevent SET Room = REPLACE(Room, '}', '');
 
     # CMIS atributes
     Instance = models.CharField(max_length=50, default='NULL')
@@ -58,7 +67,7 @@ class CMISEvent(models.Model):
     TotalOccurrences = models.IntegerField(default=0)
 
     def __str__(self):
-        return '%s %s %s %s %s ' % (self.Room, self.Day, self.Start, self.Finish, self.SubjectName)
+        return '%s %s %s %s %s ' % (self.SubjectName, self.Room, self.Day, self.Start, self.Finish)
 
 class AttendEvent(models.Model):
     # FKs
@@ -69,8 +78,15 @@ class AttendEvent(models.Model):
     date_attended = models.DateTimeField(default=datetime.datetime.now)
     Session = models.CharField(max_length=50, default='NULL')
 
+    def __str__(self):
+        return '%s %s %s %s' % (self.student, self.event, self.date_attended, self.Session)
+
+
 class Attendance(models.Model):
     event = models.ForeignKey(CMISEvent)
     student = models.ForeignKey(NFCUser)
     AttendancePct = models.DecimalField(max_digits=6,decimal_places=2,default=Decimal('0.00'))
     RunningTotal = models.IntegerField(default=0)
+
+    def __str__(self):
+        return '%s %s %s %s' % (self.student, self.event, self.AttendancePct, self.RunningTotal)

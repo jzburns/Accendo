@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from django.contrib import admin
-from .models import NFCUser
+from .models import NFCUser, Attendance, AttendEvent
 from .models import CMISEvent
 
 class NFCUserAdmin(admin.ModelAdmin):
@@ -34,3 +34,22 @@ class CMISEventAdmin(admin.ModelAdmin):
     ]
 admin.site.register(CMISEvent, CMISEventAdmin)
 
+class AttendEventAdmin(admin.ModelAdmin):
+    search_fields = ('event', 'student', 'date_attended', 'Session')
+    fieldsets = [
+        (None,      {'fields': ['event',
+                    'student',
+                    'date_attended',
+                    'Session']}),
+    ]
+admin.site.register(AttendEvent, AttendEventAdmin)
+
+class AttendanceAdmin(admin.ModelAdmin):
+    search_fields = ('event', 'student', 'Room')
+    fieldsets = [
+        (None,      {'fields': ['event',
+                    'student',
+                    'RunningTotal',
+                    'AttendancePct']}),
+    ]
+admin.site.register(Attendance, AttendanceAdmin)
