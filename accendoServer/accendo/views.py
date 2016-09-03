@@ -1,5 +1,5 @@
 # Create your views here.from django.http import HttpResponse
-
+import datetime
 from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
@@ -89,16 +89,16 @@ def InitSession(request, sessionid):
     if request.method == 'GET':
         if sessionid == request.session['sessionid']:
             user_id = request.session['user_id']
-            # todaysdate = datetime.datetime.today().strftime('%d-%m-%Y')
-            # thishour = datetime.datetime.now().time().strftime("%H:00")
+            todaysdate = datetime.datetime.today().strftime('%d-%m-%Y')
+            thishour = datetime.datetime.now().time().strftime("%H:00")
             # test with
-            todaysdate = '13-11-2015'
-            thishour = '11:00'
+            # todaysdate = '13-11-2015'
+            # thishour = '11:00'
             cmisevents = CMISEvent.objects.filter(teacher_id=user_id, Dates__contains=todaysdate, Start=thishour)
             if not cmisevents:
-                if request.session['user_role'] == 'teacher':
+                if request.session['user_role'] == 'lecturer':
                     # teacher role but not class on now
-                    return JSONResponse({'ERROR': "NSE"})
+                    return JSONResponse({'ERROR': "NAS"})
                 else:
                     # student role
                     return JSONResponse({'ERROR': "RS"})

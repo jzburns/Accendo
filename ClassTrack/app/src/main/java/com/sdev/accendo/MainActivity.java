@@ -51,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
          */
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+/**
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,14 +63,14 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
+**/
         this.setupNFC();
     }
 
     private void setupNFC() {
         mAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        TextView text = (TextView) findViewById(R.id.textView3);
+        TextView text = (TextView) findViewById(R.id.message_log);
 
         if(mAdapter == null){
             text.setText("No NFC Adapter Found");
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             text.setText("NFC Adapter Found");
             int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.NFC);
             if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                text.setText("Permission Granted");
+                text.setText("Permission Granted - Touch Card to Begin");
             } else {
                 text.setText("Permission NOT Granted");
             }
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void debugMsg(String str) {
-        TextView text = (TextView) findViewById(R.id.textView3);
+        TextView text = (TextView) findViewById(R.id.message_log);
         text.setText(str);
     }
 

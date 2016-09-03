@@ -106,7 +106,7 @@ public class StartNewSession extends AppCompatActivity {
                         } catch (org.json.JSONException e) {
                             try {
                                 String errormsg = response.getString("ERROR");
-                                eventData(errormsg);
+                                eventData(getResources().getString(R.string.NAS));
                             } catch (org.json.JSONException excp) {
                                 eventData(excp.getLocalizedMessage());
                             }
@@ -218,7 +218,7 @@ public class StartNewSession extends AppCompatActivity {
                                     response.getString("user_id"));
                         } catch (org.json.JSONException e) {
                             try {
-                                String errormsg = response.getString("ERROR");
+                                String errormsg = response.getString("NAS");
                             } catch (org.json.JSONException excp) {
                                 messageLog(excp.getLocalizedMessage());
                             }
