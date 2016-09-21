@@ -1,0 +1,16 @@
+DROP PROCEDURE IF EXISTS accendo.trimchars;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `trimchars`()
+    MODIFIES SQL DATA
+UPDATE accendo_cmisevent SET Dates = REPLACE(Dates, '|', '');
+UPDATE accendo_cmisevent SET Dates = REPLACE(Dates, '{', '');
+UPDATE accendo_cmisevent SET Dates = REPLACE(Dates, '}', '');
+
+UPDATE accendo_cmisevent SET SubjectCode = REPLACE(SubjectCode, '{', '');
+UPDATE accendo_cmisevent SET SubjectCode = REPLACE(SubjectCode, '}', '');
+
+UPDATE accendo_cmisevent SET SubjectName = REPLACE(SubjectName, '{', '');
+UPDATE accendo_cmisevent SET SubjectName = REPLACE(SubjectName, '}', '');
+
+UPDATE accendo_cmisevent SET Room = REPLACE(Room, '{', '');
+UPDATE accendo_cmisevent SET Room = REPLACE(Room, '}', '');
+

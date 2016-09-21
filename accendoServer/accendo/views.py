@@ -167,8 +167,8 @@ def Attend(request, sessionid, cardid):
             if att:
                 att.RunningTotal += 1
 
-                # todaysdate = datetime.datetime.today().strftime('%d-%m-%Y')
-                todaysdate = '13-11-2015'
+                todaysdate = datetime.datetime.today().strftime('%d-%m-%Y')
+                # todaysdate = '13-11-2015'
                 # what week is this?
                 week = ev.Dates.index(todaysdate)
                 week = week / 11 + 1

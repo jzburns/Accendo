@@ -3,13 +3,13 @@
 ttdir=$HOME/accendo/ttdir
 rm $ttdir/*
 
-for i in {350..650}
+for i in {545..545}
 do
    wget -O /dev/null --save-cookies cookies.txt  --keep-session-cookies \
     "http://cmis.it-tallaght.ie/eportal/PortalServ?reqtype=login&username=$i"
 
    wget -O $ttdir/"$i".html --load-cookies cookies.txt \
-    "http://cmis.it-tallaght.ie/eportal/PortalServ?reqtype=timetable&username=$i&action=getgrid&sKey=2015-2016%7C$i&sWeeks=&sType=lecturer&sYear=&sFromDate=&sToDate=&sEventType=&sModOccur=&sSource=&instCode=-2&instName=&useBooking=null&contactkey=&isBooking=null&subTitle="
+    "http://cmis.it-tallaght.ie/eportal/PortalServ?reqtype=timetable&username=$i&action=getgrid&sKey=2016-2017%7C$i&sWeeks=&sType=lecturer&sYear=&sFromDate=&sToDate=&sEventType=&sModOccur=&sSource=&instCode=-2&instName=&useBooking=null&contactkey=&isBooking=null&subTitle="
 
   # convert html to text
   sed -e 's/<[^>]*>//g' $ttdir/"$i".html > $ttdir/"$i".txt

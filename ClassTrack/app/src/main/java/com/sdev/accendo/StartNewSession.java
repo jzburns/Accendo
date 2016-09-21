@@ -44,14 +44,15 @@ public class StartNewSession extends AppCompatActivity {
     private TextView mText;
     private String mSessionid;
     private String mFullevent;
+    private String mHostPortApp;
 
-    ArrayList<String> listItems=new ArrayList<String>();
+    ArrayList<String> listItems = new ArrayList<String>();
     ArrayAdapter<String> adapter;
 
-    int clickCounter=0;
+    int clickCounter = 0;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -79,12 +80,16 @@ public class StartNewSession extends AppCompatActivity {
         this.setupNFC();
         this.initSession();
 
-        adapter = new ArrayAdapter<String>(this,  android.R.layout.simple_list_item_1, listItems);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);
         ListView students = (ListView) findViewById(R.id.listViewStudents);
         students.setAdapter(adapter);
-        }
 
-    protected void initSession () {
+        mHostPortApp = getResources().getString(R.string.http_server) + ":" +
+                getResources().getString(R.string.http_port) + "/" +
+                getResources().getString(R.string.http_app);
+    }
+
+    protected void initSession() {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         String sessionid = getIntent().getExtras().getString("sessionid");
@@ -92,7 +97,7 @@ public class StartNewSession extends AppCompatActivity {
         /*
          * start a new session
          */
-        String url ="http://192.168.1.15:8000/accendo/initsession/" + sessionid;
+        String url = mHostPortApp + "/initsession/" + sessionid;
 
         this.debugMsg("Init Sessions: " + sessionid);
 
@@ -101,7 +106,7 @@ public class StartNewSession extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                          String fullevent = response.getString("event");
+                            String fullevent = response.getString("event");
                             eventData(fullevent);
                         } catch (org.json.JSONException e) {
                             try {
@@ -137,21 +142,21 @@ public class StartNewSession extends AppCompatActivity {
         } catch (IntentFilter.MalformedMimeTypeException e) {
             throw new RuntimeException("fail", e);
         }
-        mFilters = new IntentFilter[] {
+        mFilters = new IntentFilter[]{
                 ndef,
         };
-        mTechLists = new String[][] { new String[] { NfcF.class.getName() } };
+        mTechLists = new String[][]{new String[]{NfcF.class.getName()}};
         IntentFilter td = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-        mFilters = new IntentFilter[] {
+        mFilters = new IntentFilter[]{
                 ndef, td
         };
 
-        mTechLists = new String[][] { new String[] {
+        mTechLists = new String[][]{new String[]{
                 NfcV.class.getName(),
                 NfcF.class.getName(),
                 NfcA.class.getName(),
                 NfcB.class.getName()
-        } };
+        }};
         debugMsg("NFC setup complete");
     }
 
@@ -161,7 +166,7 @@ public class StartNewSession extends AppCompatActivity {
         debugMsg("New Intent");
         String msg = "";
 
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())){
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 debugMsg("has extras");
@@ -169,7 +174,7 @@ public class StartNewSession extends AppCompatActivity {
                 Iterator<String> it = keys.iterator();
                 while (it.hasNext()) {
                     String key = it.next();
-                    msg += "[" + key + "=" + bundle.get(key)+"]";
+                    msg += "[" + key + "=" + bundle.get(key) + "]";
                 }
             } else {
                 debugMsg("bundle is null");
@@ -193,7 +198,7 @@ public class StartNewSession extends AppCompatActivity {
         }
     }
 
-    protected void attend (String cardid) {
+    protected void attend(String cardid) {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         String sessionid = getIntent().getExtras().getString("sessionid");
@@ -202,7 +207,7 @@ public class StartNewSession extends AppCompatActivity {
          * start a new session
          */
         cardid = cardid.replace(" ", "");
-        String url ="http://192.168.1.15:8000/accendo/attend/" + sessionid + "/" + cardid;
+        String url = mHostPortApp + "/attend/" + sessionid + "/" + cardid;
 
         this.debugMsg("Init Sessions: " + sessionid);
 
@@ -247,7 +252,7 @@ public class StartNewSession extends AppCompatActivity {
     }
 
     private void studentData(String str) {
-        if(!listItems.contains((str))) {
+        if (!listItems.contains((str))) {
             listItems.add(0, str);
             adapter.notifyDataSetChanged();
         }
