@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2272067c-5f77-4dfe-8ee6-c662337aedc4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ClassTrack/app/build.gradle" afterPath="$PROJECT_DIR$/../ClassTrack/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/accendo/views.py" afterPath="$PROJECT_DIR$/accendo/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../get_tt.sh" afterPath="$PROJECT_DIR$/../get_tt.sh" />
-    </list>
+    <list default="true" id="2272067c-5f77-4dfe-8ee6-c662337aedc4" name="Default" comment="" />
     <ignored path="mysite.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -55,8 +50,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/accendo/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1035">
-              <caret line="170" column="18" selection-start-line="170" selection-start-column="18" selection-end-line="170" selection-end-column="18" />
+            <state relative-caret-position="459">
+              <caret line="138" column="74" selection-start-line="138" selection-start-column="74" selection-end-line="138" selection-end-column="74" />
               <folding>
                 <element signature="e#62#77#0" expanded="true" />
               </folding>
@@ -1265,7 +1260,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1920" height="1173" extended-state="1" />
+    <frame x="0" y="27" width="1920" height="1173" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18376069" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1711,8 +1706,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/accendo/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="170" column="18" selection-start-line="170" selection-start-column="18" selection-end-line="170" selection-end-column="18" />
+        <state relative-caret-position="459">
+          <caret line="138" column="74" selection-start-line="138" selection-start-column="74" selection-end-line="138" selection-end-column="74" />
           <folding>
             <element signature="e#62#77#0" expanded="true" />
           </folding>

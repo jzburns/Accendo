@@ -20,6 +20,8 @@ import java.net.CookieStore;
 
 public class EnterPin extends AppCompatActivity {
 
+    private String mHostPortApp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,10 @@ public class EnterPin extends AppCompatActivity {
             return handled;
         }
     });
+        mHostPortApp = getResources().getString(R.string.http_server) + ":" +
+                getResources().getString(R.string.http_port) + "/" +
+                getResources().getString(R.string.http_app);
+
     }
 
     private void debugMsg(String str) {
@@ -62,9 +68,9 @@ public class EnterPin extends AppCompatActivity {
         /*
          * validate the user
          */
-        String url ="http://192.168.1.15:8000/accendo/validateuser/" + cardid + "/" + pin;
+        String url = mHostPortApp + "/validateuser/" + cardid + "/" + pin;
 
-        this.debugMsg("Validating user: " + cardid + "PIN: " + pin);
+        this.debugMsg(mHostPortApp + " @ " + cardid + "PIN: " + pin);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

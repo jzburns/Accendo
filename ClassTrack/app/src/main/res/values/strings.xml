@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="NAS">No Active Session at this Time</string>
     <string name="title_activity_student">StudentActivity</string>
-    <string name="http_server">46.7.151.197</string>
+    <string name="http_server">http://46.7.151.197</string>
     <string name="http_port">8000</string>
     <string name="http_app">accendo</string>
 </resources>
